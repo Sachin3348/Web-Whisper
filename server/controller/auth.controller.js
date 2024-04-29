@@ -17,7 +17,7 @@ export const signup = async (req, res) => {
         return res.status(code || 200).send({status, message, ...(isErrorForUser && {isErrorForUser})})
     } catch (error) {
         console.log(`Error while creating user with message: ${error.message}`, {userName, fullName, password, gender, age})
-        return res.status(500).send({status: false, message: "Something went wrong please try again later"})
+        return res.status(500).send({status: false, message: "Internal Server Error"})
     }
 }
 export const login = async (req, res) => {
@@ -35,9 +35,16 @@ export const login = async (req, res) => {
 
     } catch (error) {
         console.log(`Error while login user with message: ${error.message}`, {userName, password})
-        return res.status(500).send({status: false, message: "Something went wrong please try again later"})
+        return res.status(500).send({status: false, message: "Internal Server Error"})
     }
 }
 export const logout = (req, res) => {
-
+    try {
+        res.cookie("userToken", "", {maxAge: 0})
+        return res.status(200).send({status:true, message: "Logged Out Successfully"})
+    } catch (error) {
+        console.log("Error while logging out user", error.message)
+        res.status(500).send({status:false, message: "Internal Server Error"})
+    }
+    
 }
