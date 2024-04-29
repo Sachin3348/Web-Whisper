@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { GENDER_LIST } from "../utils/constant.js";
 
 const userSchema = new mongoose.Schema({
     fullName:{
@@ -15,7 +16,7 @@ const userSchema = new mongoose.Schema({
     age:Number,
     gender:{
         type: String,
-        enum: ["Male", "Female", 'Other']
+        enum: GENDER_LIST
     },
     password: {
         type: String,
@@ -24,7 +25,13 @@ const userSchema = new mongoose.Schema({
     profilePic:{
         type: String,
         default: ''
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
     }
 }, {timestamps: true})
 
-export default User = mongoose.model('User', userSchema)
+userSchema.index = {userName: 1}
+const User = mongoose.model('User', userSchema)
+export default User
