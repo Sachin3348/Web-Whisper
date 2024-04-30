@@ -1,5 +1,6 @@
 import React from "react";
 import Sidebar from "../../components/sidebar/Sidebar";
+import Logout from "../../components/molecules/Logout";
 
 
 const Home = () => {
@@ -9,7 +10,7 @@ const Home = () => {
      bg-gray-400 overflow-hidden"
     >
       <Sidebar />
-      <div className=" divider px-3"></div>
+      <Logout />
     </div>
   );
 };
